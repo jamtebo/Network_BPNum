@@ -18,21 +18,19 @@ training_data_file = open("mnidata/mnist_train.csv", 'r')
 training_data_list = training_data_file.readlines()
 training_data_file.close()
 #训练
-print("开始训练" )
-epochs = 5
-for e in range(epochs):
-    for record in training_data_list:
-        all_values = record.split(',')
-        # 调整输入
-        inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
-        # 期望输出
-        targets = numpy.zeros(output_nodes) + 0.01
-        targets[int(all_values[0])] = 0.99
-        n.train(inputs, targets)
-        pass
-    pass
-print("结束训练")
-n.SaveWeight()
+#print("开始训练" )
+#epochs = 5
+#for e in range(epochs):
+#    for record in training_data_list:
+#        all_values = record.split(',')
+#        # 调整输入
+#        inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+#        # 期望输出
+#        targets = numpy.zeros(output_nodes) + 0.01
+#        targets[int(all_values[0])] = 0.99
+#        n.train(inputs, targets)
+#print("结束训练")
+n.LoadWeight()
 
 #测试
 test_data_file = open("mnidata/mnist_test.csv", 'r')
@@ -43,11 +41,11 @@ scorecard = []
 for record in test_data_list:
     all_values = record.split(',')
     correct_label = int(all_values[0])
-    print("正确值：", correct_label)
+    #print("正确值：", correct_label)
     input = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
     outputs = n.query(input)
     label = numpy.argmax(outputs)
-    print("计算值：", label)
+    #print("计算值：", label)
     if (label == correct_label):
         scorecard.append(1)
     else:
