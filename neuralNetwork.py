@@ -19,7 +19,7 @@ class neuralNetwork:
 
     #训练：学习给定训练集样本，优化权重
     def train(self, inputs_list, targets_list):
-        #目标
+        #目标（标准答案）
         targets = numpy.array(targets_list, ndmin=2).T
         # 输入节点
         inputs = numpy.array(inputs_list, ndmin=2).T
