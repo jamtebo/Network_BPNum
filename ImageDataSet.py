@@ -17,6 +17,7 @@ class imageDataSet(torch.utils.data.Dataset):
         img_path = self.imgs[index]
         pil_img =Image.open(img_path)
         img_data = GetImageData(28, 28, img_path)
+        img_data = img_data.reshape(1, 28, 28)
         data = torch.from_numpy(img_data)
         return data
 

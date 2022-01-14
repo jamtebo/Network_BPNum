@@ -87,7 +87,8 @@ class netCNN(nn.Module):
         with torch.no_grad():
             for data in imageData:
                 output = self(data)
-                result.append(output.data.max(1, keepdim=True)[1].item())
+                pred = output.data.min(1, keepdim=True)[1]
+                result = pred
         return result
 
     #加载网络内部状态

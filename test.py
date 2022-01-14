@@ -2,7 +2,7 @@ import numpy
 import scipy.special
 import matplotlib.pyplot as plt
 import csv
-#%matplotlib inline
+import time
 
 from neuralNetwork import*
 
@@ -17,20 +17,24 @@ n = neuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate)
 training_data_file = open("mnidata/mnist_train.csv", 'r')
 training_data_list = training_data_file.readlines()
 training_data_file.close()
-#训练
-#print("开始训练" )
-#epochs = 5
-#for e in range(epochs):
-#    for record in training_data_list:
-#        all_values = record.split(',')
-#        # 调整输入
-#        inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
-#        # 期望输出
-#        targets = numpy.zeros(output_nodes) + 0.01
-#        targets[int(all_values[0])] = 0.99
-#        n.train(inputs, targets)
-#print("结束训练")
-n.LoadWeight()
+#训练  3个世代耗时：109.57  正确率：96.49%    |  5个世代耗时：166.803189861  正确率：96.25 %
+print("开始训练" )
+start = time.clock()
+epochs = 3
+for e in range(epochs):
+    for record in training_data_list:
+        all_values = record.split(',')
+        # 调整输入
+        inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+        # 期望输出
+        targets = numpy.zeros(output_nodes) + 0.01
+        targets[int(all_values[0])] = 0.99
+        n.train(inputs, targets)
+end = time.clock()
+UseTime = end - start
+print("总耗时为：%s" % UseTime)
+n.SaveWeight()
+#n.LoadWeight()
 
 #测试
 test_data_file = open("mnidata/mnist_test.csv", 'r')

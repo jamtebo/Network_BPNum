@@ -57,27 +57,27 @@ network = netCNN()
 optimizer = optim.SGD(network.parameters(), lr=learning_rate, momentum=momentum)
 
 #加载网络内部结构
-network.LoadState(optimizer)
+#network.LoadState(optimizer)
 
 train_losses = []
 train_counter = []
 test_losses = []
 test_counter = [i*len(train_loader.dataset) for i in range(1, n_epochs + 1)]
 
-#训练及测试 跑过两次：90s和120s
-#start = time.clock()
-#for epoch in range(1, n_epochs + 1):    
-  #network.trainData(epoch, optimizer, train_loader, train_losses, train_counter)
-  #network.test(test_loader, test_losses)
-#end = time.clock()
-#UseTime = end - start
-#print("总耗时为：%s" % UseTime)
+#训练及测试 3个世代:92s  97%    119.5s  97%
+start = time.clock()
+for epoch in range(1, n_epochs + 1):    
+  network.trainData(epoch, optimizer, train_loader, train_losses, train_counter)
+  network.test(test_loader, test_losses)
+end = time.clock()
+UseTime = end - start
+print("总耗时为：%s" % UseTime)
 
 #绘制训练曲线
-#fig = plt.figure()
-#plt.plot(train_counter, train_losses, color='blue')
-#plt.scatter(test_counter, test_losses, color='red')
-#plt.legend(['Train Loss', 'Test Loss'], loc='upper right')
-#plt.xlabel('number of training examples seen')
-#plt.ylabel('negative log likelihood loss')
-#plt.show()
+fig = plt.figure()
+plt.plot(train_counter, train_losses, color='blue')
+plt.scatter(test_counter, test_losses, color='red')
+plt.legend(['Train Loss', 'Test Loss'], loc='upper right')
+plt.xlabel('number of training examples seen')
+plt.ylabel('negative log likelihood loss')
+plt.show()
